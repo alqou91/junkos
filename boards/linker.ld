@@ -1,15 +1,17 @@
+ENTRY(_start)
+
 SECTIONS
 {
 	.start :
 	{
-		*(.start .start.*);
-	} > rom
+		KEEP(*(.start));
+	} > ram # rom
 
 	.text :
 	{
 		*(.text .text.*);
 		*(.rodata .rodata.*);
-	} > rom
+	} > ram # rom
 
 	.relocate :
 	{
@@ -17,10 +19,11 @@ SECTIONS
 		_relocate_start = .;
 
 		*(.data .data.*);
+		PROVIDE(_global_pointer = . + 0x800);
 
 		. = ALIGN(4);
 		_relocate_end = .;
-	} > rom
+	} > ram # rom
 
 	.bss (NOLOAD) :
 	{
@@ -29,14 +32,5 @@ SECTIONS
 		_bss_end = .;
 	} > ram
 
-	.stack (NOLOAD) :
-	{
-		. = ALIGN(8);
-		_stack_start = .;
-
-		KEEP(*(.stack))
-
-		. = ALIGN(8);
-		_stack_end = .;
-	} > ram
+	PROVIDE(_stack = . + 0x8000);
 }

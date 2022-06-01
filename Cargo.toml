@@ -2,5 +2,5 @@
 members = [
 		"arch/rv64",
 		"kernel",
-		"boards/qemu-virt",
+		"boards/qemu-riscv64-virt",
 ]
