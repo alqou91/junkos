@@ -1,8 +1,8 @@
 #![no_std]
 #![no_main]
 
-use rv64;
 use core::panic::PanicInfo;
+use rv64;
 
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
@@ -11,5 +11,5 @@ fn panic(_info: &PanicInfo) -> ! {
 
 #[no_mangle]
 pub unsafe fn main() {
-	loop {}
+    loop {}
 }
