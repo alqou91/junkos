@@ -2,6 +2,7 @@
 .section .start, "ax", @progbits
 .global _start
 _start:
+	/*
 	csrw mie, zero
 	csrw mip, zero
 	la sp, _stack
@@ -16,4 +17,5 @@ _start:
 	csrw mie, t2
 	csrsi mstatus, 0x8
 	csrw mscratch, zero
+	*/
 	j main

@@ -3,4 +3,4 @@ target = "riscv64imac-unknown-none-elf"
 rustflags = ["-C", "link-arg=-Tboards/qemu-riscv64-virt/layout.ld"]
 
 [target.riscv64imac-unknown-none-elf]
-runner = "qemu-system-riscv64 -machine virt -cpu rv64 -m 2G -bios none -d int -nographic -kernel"
+runner = "qemu-system-riscv64 -d int -machine virt -cpu rv64 -m 2G -nographic -bios fw_jump.bin -kernel"
