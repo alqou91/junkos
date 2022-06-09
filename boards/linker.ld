@@ -15,13 +15,8 @@ SECTIONS
 
 	.relocate :
 	{
-		. = ALIGN(4);
 		_relocate_start = .;
-
 		*(.data .data.*);
-		PROVIDE(_global_pointer = . + 0x800);
-
-		. = ALIGN(4);
 		_relocate_end = .;
 	} > ram # rom
 
