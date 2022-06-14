@@ -1,13 +1,12 @@
 #![no_std]
 use core::arch::asm;
 
-/* a7 */
-enum EID {
-	BASE = 0x10,
+pub enum EID {
+	//BASE = 0x10,
 	TIMER = 0x54494D45,
 }
 
-enum Error {
+pub enum Error {
 	Success = 0,
 	Failed = -1,
 	NotSupported = -2,
@@ -47,7 +46,7 @@ impl Sbi {
 	}
 
 	pub fn set_timer(&self, time: usize) {
-		let (error, value) = self.call(EID::TIMER as usize, 0 as usize, time, 0);
+		let (error, _) = self.call(EID::TIMER as usize, 0 as usize, time, 0);
 
 		match error {
 			0 => (),

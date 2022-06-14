@@ -8,3 +8,4 @@ cc = "1.0.73"
 
 [dependencies]
 sbi = { path = "./sbi" }
+csr = { path = "./csr" }

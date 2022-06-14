@@ -1,8 +1,10 @@
 #![no_std]
 
-use sbi;
+use csr::{Mode, Stvec};
 
-pub fn timer_test() {
-	let sbi = sbi::Sbi::new();
-	sbi.set_timer(100);
+pub fn init_irq() {
+    Stvec::read()
+        .mode(Mode::Direct)
+        .address(0x9908)
+        .write();
 }

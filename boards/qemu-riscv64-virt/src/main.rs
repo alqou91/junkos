@@ -11,6 +11,6 @@ fn panic(_info: &PanicInfo) -> ! {
 
 #[no_mangle]
 pub unsafe fn main() {
-	rv64::timer_test();
+	rv64::init_irq();
     loop {}
 }
