@@ -4,26 +4,29 @@
 
 use core::arch::asm;
 use csr::{Mode, Stvec};
+use sbi::Sbi;
 
 extern "C" {
 	static _stack: usize;
 }
 
-fn trap_handler() {
+fn trap_handler(cause: usize) {
 }
 
 pub fn init_irq() {
+	Sbi::new().set_timer(10000);
+
 	Stvec::read()
 		.mode(Mode::Direct)
-		.address(_trap_handler as usize)
+		.address(_trap as usize)
 		.write();
 }
 
 #[naked]
-pub extern "C" fn _trap_handler() {
+extern "C" fn _trap() {
 	unsafe {
-		asm!(
-			"j {handler}",
+		asm!("csrr a0, scause",
+			 "jal {handler}",
 			 "sret",
 			 handler = sym trap_handler,
 			 options(noreturn));
@@ -33,10 +36,18 @@ pub extern "C" fn _trap_handler() {
 #[naked]
 #[link_section = ".start"]
 #[export_name = "_start"]
-pub extern "C" fn _start() {
+extern "C" fn _start() {
 	unsafe {
 		asm!(
 			"la sp, {stack}",
+			// time sie
+			"csrr a3, sie",
+			"addi a3, a3, 0x20",
+			"csrw sie, a3",
+			// sstatus
+			"csrr a3, sstatus",
+			"addi a3, a3, 0x2",
+			"csrw sstatus, a3",
 			"j main",
 			stack = sym _stack,
 			options(noreturn));
